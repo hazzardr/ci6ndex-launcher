@@ -1,3 +1,13 @@
 [tools]
 go = "1.26.2"
 node = "24"
+golangci-lint = "2"
+
+[tasks.lint]
+description = "Run golangci-lint on all Go modules"
+run = """
+#!/usr/bin/env bash
+set -euo pipefail
+cd pkg/shared && golangci-lint run ./...
+cd ../../apps/launcher && golangci-lint run ./...
+"""

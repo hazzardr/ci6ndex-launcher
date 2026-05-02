@@ -18,6 +18,16 @@ var assets embed.FS
 //go:embed build/appicon.png
 var icon []byte
 
+const (
+	windowWidth     = 1024
+	windowHeight    = 768
+	windowMinWidth  = 1024
+	windowMinHeight = 768
+	windowMaxWidth  = 1280
+	windowMaxHeight = 800
+	colorMax        = 255
+)
+
 func main() {
 	// Create an instance of the app structure
 	app := NewApp()
@@ -25,29 +35,29 @@ func main() {
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:             "launcher",
-		Width:             1024,
-		Height:            768,
-		MinWidth:          1024,
-		MinHeight:         768,
-		MaxWidth:          1280,
-		MaxHeight:         800,
+		Width:             windowWidth,
+		Height:            windowHeight,
+		MinWidth:          windowMinWidth,
+		MinHeight:         windowMinHeight,
+		MaxWidth:          windowMaxWidth,
+		MaxHeight:         windowMaxHeight,
 		DisableResize:     false,
 		Fullscreen:        false,
 		Frameless:         false,
 		StartHidden:       false,
 		HideWindowOnClose: false,
-		BackgroundColour:  &options.RGBA{R: 255, G: 255, B: 255, A: 255},
-		AssetServer:       &assetserver.Options{
+		BackgroundColour:  &options.RGBA{R: colorMax, G: colorMax, B: colorMax, A: colorMax},
+		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
-		Menu:              nil,
-		Logger:            nil,
-		LogLevel:          logger.DEBUG,
-		OnStartup:         app.startup,
-		OnDomReady:        app.domReady,
-		OnBeforeClose:     app.beforeClose,
-		OnShutdown:        app.shutdown,
-		WindowStartState:  options.Normal,
+		Menu:             nil,
+		Logger:           nil,
+		LogLevel:         logger.DEBUG,
+		OnStartup:        app.startup,
+		OnDomReady:       app.domReady,
+		OnBeforeClose:    app.beforeClose,
+		OnShutdown:       app.shutdown,
+		WindowStartState: options.Normal,
 		Bind: []interface{}{
 			app,
 		},
@@ -56,9 +66,8 @@ func main() {
 			WebviewIsTransparent: false,
 			WindowIsTranslucent:  false,
 			DisableWindowIcon:    false,
-			// DisableFramelessWindowDecorations: false,
-			WebviewUserDataPath: "",
-			ZoomFactor: 1.0,
+			WebviewUserDataPath:  "",
+			ZoomFactor:           1.0,
 		},
 		// Mac platform specific options
 		Mac: &mac.Options{
