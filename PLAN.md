@@ -9,7 +9,6 @@ Build a desktop mod profile manager for Civilization VI, similar to r2modman. Us
 - **Backend Server**: Go 1.26 + Chi router
 - **Mono-repo**: Go workspace (`go.work`) with shared packages
 
-> **Note on Astro**: Astro is not available as a Wails frontend template. Wails expects a single-page application with client-side routing. Astro is primarily a static-site generator and would require awkward workarounds. **Svelte** is recommended instead — it is lightweight, has excellent Wails templates, and feels native in a desktop context.
 
 ---
 
@@ -26,7 +25,7 @@ ci6ndex-bundle/
 │       ├── profile.go
 │       └── mod.go
 ├── apps/
-│   ├── desktop/                     # Wails application
+│   ├── launcher/                     # Wails application
 │   │   ├── go.mod
 │   │   ├── main.go
 │   │   ├── wails.json
@@ -62,10 +61,9 @@ ci6ndex-bundle/
 - Scaffold `pkg/shared/` with core types:
   - `Mod` (UUID, Name, Version, Author, Source, Path, WorkshopID)
   - `Profile` (ID, Name, Description, ModUUIDs, CreatedAt)
-- Initialize Wails project in `apps/desktop/` using the **Svelte** template
-- Initialize Go HTTP server in `apps/server/` with Chi router and standard project layout
+- Initialize Wails project in `apps/launcher/` using the **Svelte** template
 
-### 1.2 Desktop — Mod Discovery
+### 1.2 Launcher — Mod Discovery
 Implement `internal/modscan/` to:
 - Locate Civ 6 mod directories:
   - Local mods: `Documents/My Games/Sid Meier's Civilization VI/Mods/`
@@ -74,13 +72,13 @@ Implement `internal/modscan/` to:
 - Resolve Steam Workshop items: map folder names (Workshop IDs) to mod metadata
 - Expose a Wails binding: `ScanMods() → []Mod`
 
-### 1.3 Desktop — Profile CRUD (Local Only)
+### 1.3 Launcher — Profile CRUD (Local Only)
 Implement `internal/profile/` to:
 - Store profiles as JSON in the app’s config directory
 - Methods: `CreateProfile`, `GetProfiles`, `UpdateProfile`, `DeleteProfile`
 - Bind to frontend: profile list view, create/edit forms
 
-### 1.4 Desktop — Civ 6 SQLite Integration
+### 1.4 Launcher — Civ 6 SQLite Integration
 Implement `internal/sqlite/` to:
 - Open `Mods.sqlite` (read-only for discovery, read-write for switching)
 - Map the schema:
@@ -99,6 +97,7 @@ Implement `internal/sqlite/` to:
 ## Phase 2 — Sharing Backend (Week 2)
 
 ### 2.1 Server Scaffold
+- Initialize Go HTTP server in `apps/server/` with Chi router and standard project layout
 - Chi router with middleware: logging, request ID, CORS, recovery
 - Health endpoint: `GET /health`
 - Configuration via env vars: `PORT`, `DATABASE_URL`, `API_KEY` (optional rate limiting)
@@ -115,7 +114,7 @@ Implement `GET /profiles/{code}`:
 - Returns `404` if not found
 - Returns `410` if expired (optional for MVP)
 
-### 2.3 Desktop — Share & Import
+### 2.3 Launcher — Share & Import
 - **Share**: `ShareProfile(profileID) → string` binding
   - POSTs profile JSON to backend
   - Copies share code to clipboard
@@ -145,7 +144,7 @@ Implement `GET /profiles/{code}`:
 ### 3.3 Build & Distribution
 - Wails build for Windows (`wails build -platform windows`)
 - Server container image (`Dockerfile` in `apps/server/`)
-- `scripts/build.sh` to automate desktop builds
+- `scripts/build.sh` to automate launcher builds
 
 ---
 
@@ -156,7 +155,7 @@ Implement `GET /profiles/{code}`:
 - [ ] User can apply a profile, which correctly updates `Mods.sqlite`
 - [ ] User can share a profile as a short code
 - [ ] Another user can import a profile by code and see which mods are missing
-- [ ] Desktop app runs on Windows (primary target)
+- [ ] Launcher app runs on Windows (primary target)
 
 ---
 

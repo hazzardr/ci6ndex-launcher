@@ -1,0 +1,36 @@
+# --- IDEs ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# --- Go ---
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# --- Wails ---
+# Build artifacts
+apps/launcher/build/bin/
+apps/launcher/build/darwin/
+apps/launcher/build/windows/
+
+# Compiled binary (matches module name, adjust if you rename it)
+apps/launcher/launcher
+
+# Frontend build artifacts & generated files
+apps/launcher/frontend/node_modules/
+apps/launcher/frontend/dist/
+apps/launcher/frontend/wailsjs/
+apps/launcher/frontend/package.json.md5
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
