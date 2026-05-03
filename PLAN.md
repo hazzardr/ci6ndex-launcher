@@ -56,7 +56,7 @@ ci6ndex-bundle/
 
 ## Phase 1 — Foundation (Week 1)
 
-### 1.1 Repo Bootstrap
+### ~~1.1 Repo Bootstrap~~: Done!
 - Initialize Go workspace (`go work init`)
 - Scaffold `pkg/shared/` with core types:
   - `Mod` (UUID, Name, Version, Author, Source, Path, WorkshopID)
