@@ -30,10 +30,22 @@ func steamModFolderLocation() (string, error) {
 	case "darwin":
 		path = filepath.Join(homeDir, "Library", "Application Support", "Steam", "steamapps", "workshop", "content", civ6AppID)
 	case "linux":
+		candidates := []string{
+			filepath.Join(homeDir, ".steam", "steam", "steamapps", "workshop", "content", civ6AppID),
+		}
 		if xdgData := os.Getenv("XDG_DATA_HOME"); xdgData != "" {
-			path = filepath.Join(xdgData, "Steam", "steamapps", "workshop", "content", civ6AppID)
+			candidates = append(candidates, filepath.Join(xdgData, "Steam", "steamapps", "workshop", "content", civ6AppID))
 		} else {
-			path = filepath.Join(homeDir, ".local", "share", "Steam", "steamapps", "workshop", "content", civ6AppID)
+			candidates = append(candidates, filepath.Join(homeDir, ".local", "share", "Steam", "steamapps", "workshop", "content", civ6AppID))
+		}
+		for _, candidate := range candidates {
+			if _, err := os.Stat(candidate); err == nil {
+				path = candidate
+				break
+			}
+		}
+		if path == "" {
+			path = candidates[0]
 		}
 	default:
 		return "", fmt.Errorf("unsupported operating system: %s", runtime.GOOS)

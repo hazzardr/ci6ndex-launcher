@@ -1,6 +1,6 @@
 [tools]
 go = "1.26.2"
-node = "24"
+node = "latest"
 golangci-lint = "2"
 
 [tasks.lint]
