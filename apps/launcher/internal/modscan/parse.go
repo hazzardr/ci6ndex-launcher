@@ -11,7 +11,7 @@ import (
 	"github.com/hazzardr/ci6ndex-launcher/shared"
 )
 
-func ParseModInfo(path string) (shared.Mod, error) {
+func parseWorkshopModInfo(path string) (shared.Mod, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return shared.Mod{}, fmt.Errorf("read modinfo file: %w", err)

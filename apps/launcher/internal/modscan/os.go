@@ -9,7 +9,7 @@ import (
 
 const civ6AppID = "289070"
 
-func steamModFolderLocation() (string, error) {
+func SteamModFolderLocation() (string, error) {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		return "", fmt.Errorf("cannot determine user home directory: %w", err)
@@ -54,7 +54,7 @@ func steamModFolderLocation() (string, error) {
 	return path, nil
 }
 
-func locationModFolderLocation() (string, error) {
+func localModFolderLocation() (string, error) {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		return "", fmt.Errorf("cannot determine user home directory: %w", err)

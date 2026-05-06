@@ -11,3 +11,7 @@ set -euo pipefail
 cd pkg/shared && golangci-lint run ./...
 cd ../../apps/launcher && golangci-lint run ./...
 """
+
+[tasks.dev]
+description = "Run the Wails dev server for the launcher app"
+run = "cd apps/launcher && wails dev"
