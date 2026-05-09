@@ -15,6 +15,14 @@ export default ts.config(
   ...vue.configs["flat/recommended"],
   prettier,
   {
+    files: ["**/*.vue"],
+    languageOptions: {
+      parserOptions: {
+        parser: ts.parser,
+      },
+    },
+  },
+  {
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
     },

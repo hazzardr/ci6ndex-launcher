@@ -1,9 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2022",
+    "lib": ["DOM", "ESNext"],
     "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"]
+    },
     "resolveJsonModule": true,
     "allowJs": true,
     "checkJs": true,
@@ -13,7 +18,8 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.vue", "auto-imports.d.ts", "components.d.ts"]
 }

@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import logo from "./assets/images/logo-universal.png";
-import { Greet } from "../wailsjs/go/main/App.js";
+import logo from "~/assets/images/logo-universal.png";
 
 const resultText = ref("Please enter your name below 👇");
 const name = ref("");
 
 function greet(): void {
-  Greet(name.value).then((result) => (resultText.value = result));
+  resultText.value = `Hello ${name.value}, It's show time!`;
 }
 </script>
 

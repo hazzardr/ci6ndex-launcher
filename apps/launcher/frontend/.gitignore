@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 /wailsjs
+auto-imports.d.ts
+components.d.ts
+*.vue.js
 
 # Editor directories and files
 .vscode/*
